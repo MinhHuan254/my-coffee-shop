@@ -1,7 +1,7 @@
 <?php
-$host = 'mysql-coffee';  // Tên dịch vụ MySQL trong docker-compose.yml
-$username = 'user';
-$password = 'password';
+$host = 'database-1.cxwakqa4i3ta.ap-southeast-1.rds.amazonaws.com';  // Tên dịch vụ MySQL trong docker-compose.yml
+$username = 'admin';
+$password = 'tranminhhuan25';
 $database = 'CoffeeShop';
 
 $conn = new mysqli($host, $username, $password, $database);
