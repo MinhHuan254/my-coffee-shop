@@ -1,0 +1,38 @@
+
+services:
+  mysql-coffee:
+    image: mysql:5.7
+    container_name: mysql-coffee
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: CoffeeShop
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+  
+  php-container:
+    image: php:7.4-apache
+    container_name: php-container
+    ports:
+      - "8081:80"  # Sửa port nếu cần
+    depends_on:
+      - mysql-coffee
+    networks:
+      - app-network
+    build: .  # Chỉ định Dockerfile từ thư mục hiện tại (nếu có)
+    volumes:
+      - ./src:/var/www/html  # Đảm bảo mã nguồn PHP của bạn được map vào thư mục web
+    environment:
+      MYSQL_HOST: mysql-coffee  # Thêm biến môi trường để PHP biết tên MySQL service
+  
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:  # Tạo volume để lưu trữ dữ liệu MySQL
